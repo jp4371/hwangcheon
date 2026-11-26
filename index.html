@@ -1,18 +1,686 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>生死輪迴</title>
-<style>
-  body { margin: 0; background: #16120E; color: #EDE4CF; font-family: sans-serif;
-         min-height: 100dvh; display: flex; align-items: center; justify-content: center; text-align: center; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>생사윤회 로스터</title>
+  <meta name="description" content="황천의 결투장에 소환된 34인의 무인 로스터와 설화 기록" />
+  <meta property="og:title" content="생사윤회 로스터" />
+  <meta property="og:description" content="황천의 결투장에 소환된 34인의 무인 로스터와 설화 기록" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;500;600;700;900&family=Noto+Serif+KR:wght@600;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="fonts.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div>
-    <h1>生死輪迴</h1>
-    <p>세계관 & 로스터 준비 중</p>
+  <div class="app-shell" id="appShell">
+
+    <!-- =========================================================
+         (a) MAIN SECTION (#main)
+         ========================================================= -->
+    <section class="section-main" id="main" aria-label="생사윤회 메인">
+      <header class="main-topbar">
+        <div class="main-brand">
+          <span class="main-brand-hanja">生死輪迴</span>
+          <span class="main-brand-diamond" aria-hidden="true"></span>
+        </div>
+        <div class="main-menu-wrap">
+          <button
+            type="button"
+            class="main-menu-btn"
+            id="mainMenuBtn"
+            aria-label="메뉴 열기"
+            aria-expanded="false"
+            aria-controls="mainNavPopover"
+          >
+            <span class="menu-bars" aria-hidden="true">
+              <span class="menu-bar menu-bar-lg"></span>
+              <span class="menu-bar menu-bar-sm"></span>
+              <span class="menu-bar menu-bar-md"></span>
+            </span>
+          </button>
+          <nav class="main-nav-popover" id="mainNavPopover" hidden aria-label="바로가기 메뉴">
+            <a href="#main" class="main-nav-link" data-nav-target="main">00 · 메인</a>
+            <a href="#world" class="main-nav-link" data-nav-target="world">01 · 세계관</a>
+            <a href="#roster" class="main-nav-link" data-nav-target="roster">02 · 로스터</a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- HERO (Full-bleed Crimson #D3303F, ~620px) -->
+      <div class="main-hero">
+        <div class="main-hero-bg" aria-hidden="true">
+          <div class="hero-glow"></div>
+          <div class="hero-shard hero-shard-1"></div>
+          <div class="hero-shard hero-shard-2"></div>
+          <div class="hero-shard hero-shard-3"></div>
+          <div class="hero-shard hero-shard-4"></div>
+          <svg class="hero-noise" xmlns="http://www.w3.org/2000/svg">
+            <filter id="mainNoiseFilter">
+              <feTurbulence baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" type="fractalNoise"></feTurbulence>
+            </filter>
+            <rect filter="url(#mainNoiseFilter)" width="100%" height="100%"></rect>
+          </svg>
+        </div>
+
+        <div class="hero-hanja-watermark" aria-hidden="true">
+          <span>生</span>
+          <span>死</span>
+          <span>輪</span>
+          <span>迴</span>
+        </div>
+
+        <div class="main-hero-title-group">
+          <div class="main-hero-kicker">CYCLE OF TRANSMIGRATION</div>
+          <h1 class="main-hero-title">
+            <span class="main-hero-title-top">生死</span>
+            <span class="main-hero-title-bottom">輪迴</span>
+          </h1>
+          <p class="main-hero-sub">INFINITE DEATH &amp; REBIRTH ARENA</p>
+        </div>
+
+        <!-- Collectible 3:5 Frame Breaking Bottom Edge -->
+        <div class="main-hero-card" aria-hidden="true">
+          <div class="main-card-crosshairs">
+            <span>+</span>
+            <span>+</span>
+          </div>
+          <div class="main-card-visual">
+            <img
+              id="mainHeroImg"
+              class="main-card-img"
+              src="images/08_musashi.webp"
+              alt=""
+              width="768"
+              height="1280"
+            />
+            <div class="main-card-silhouette" id="mainCardSilhouette">
+              <svg viewBox="0 0 240 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="120" cy="170" r="84" stroke="rgba(243,235,211,0.16)" stroke-width="1" />
+                <circle cx="120" cy="170" r="58" stroke="rgba(243,235,211,0.12)" stroke-dasharray="4 6" stroke-width="1" />
+                <path
+                  d="M120 76C136 76 148 89 148 106C148 123 136 136 120 136C104 136 92 123 92 106C92 89 104 76 120 76ZM72 184C72 158 92 146 120 146C148 146 168 158 168 184L180 282L156 286L148 364H92L84 286L60 282L72 184Z"
+                  fill="rgba(18, 19, 28, 0.78)"
+                  stroke="rgba(243, 235, 211, 0.28)"
+                  stroke-width="1.2"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="main-card-footer">
+            <span>生死輪迴</span>
+            <span>輪迴印</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIAGONAL INK-NAVY QUOTE SLAB -->
+      <div class="main-quote-slab">
+        <div class="main-quote-inner">
+          <div class="main-quote-wrap">
+            <blockquote class="main-quote-text">
+              “이름 없는 자여,<br />
+              <span class="main-quote-accent">굴레의 율법</span>에 따라 걸어라”
+            </blockquote>
+          </div>
+          <p class="main-quote-author">황천의 지배자</p>
+        </div>
+      </div>
+
+      <!-- CONTENTS / 목차 HEADER -->
+      <div class="main-contents-header">
+        <div class="main-contents-row">
+          <div class="main-contents-titles">
+            <h2 class="main-contents-ko">목차</h2>
+            <span class="main-contents-en">TABLE OF CONTENTS</span>
+          </div>
+          <span class="main-contents-index">CHRONICLE / 02</span>
+        </div>
+        <div class="main-hairline"></div>
+      </div>
+
+      <!-- INTERACTIVE TOC CARDS (1 세계관, 2 로스터) -->
+      <div class="main-cards">
+        <!-- CARD 1: 세계관 -->
+        <a
+          href="#world"
+          class="toc-card toc-card-world"
+          id="card-world"
+          data-nav-target="world"
+        >
+          <span class="toc-notch toc-notch-gold" aria-hidden="true"></span>
+          <div class="toc-world-bg" aria-hidden="true">
+            <img
+              src="https://lh3.googleusercontent.com/aida/ALJJyrCwNeKdAwejKobqw3Nxa-cylkEttTPa3OH-8fm6ZthYWYsTVWgw9lF13BMaroOWF01St5T6kDc1V_cDwNKhGlQCm8_R1Iud1g6NroaZtokQgAaJkD6MJSLLyzkcTR4fnKwTSIr2_ZREul9qpvHAaCtZhrQHXuuYQTqXSEvaK3hWQ4Dn49XQVSynBbQH4fjaZr8pTbBYJ4riGCqAPgHMBvoj-q_J1IIO5v1iuGQsMAHFJQ"
+              alt=""
+              class="toc-world-img"
+              onerror="this.style.display='none'"
+            />
+            <div class="toc-world-scrim"></div>
+          </div>
+
+          <div class="toc-card-content">
+            <div class="toc-top-row">
+              <span class="toc-num" aria-hidden="true">01</span>
+              <span class="toc-badge toc-badge-gold">LORE ARCHIVE</span>
+            </div>
+            <div class="toc-bottom-row">
+              <div>
+                <div class="toc-kicker-row">
+                  <span class="toc-kicker toc-kicker-teal">WORLD</span>
+                  <span class="toc-kicker-line toc-line-teal" aria-hidden="true"></span>
+                </div>
+                <h3 class="toc-title">세계관</h3>
+                <p class="toc-desc">황천과 윤회의 규칙</p>
+              </div>
+              <span class="toc-circle-btn toc-circle-gold" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <span class="toc-hover-border" aria-hidden="true"></span>
+        </a>
+
+        <!-- CARD 2: 로스터 -->
+        <a
+          href="#roster"
+          class="toc-card toc-card-roster"
+          id="card-roster"
+          data-nav-target="roster"
+        >
+          <span class="toc-notch toc-notch-crimson" aria-hidden="true"></span>
+          <div class="toc-roster-bg" aria-hidden="true">
+            <svg viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M220 0 L280 0 L190 240 L130 240 Z" fill="#D3303F" fill-opacity="0.18"></path>
+              <path d="M275 0 L282 0 L192 240 L185 240 Z" fill="#ffdad8" fill-opacity="0.3"></path>
+              <g transform="translate(300, 115)">
+                <circle cx="0" cy="0" opacity="0.45" r="76" stroke="#D6A94B" stroke-dasharray="5 7" stroke-width="1.5"></circle>
+                <circle cx="0" cy="0" opacity="0.3" r="54" stroke="#ffb3b1" stroke-width="1"></circle>
+                <circle cx="0" cy="0" opacity="0.5" r="32" stroke="#81d5ca" stroke-dasharray="24 6" stroke-width="1.5"></circle>
+                <circle cx="0" cy="0" fill="#D3303F" r="6"></circle>
+                <line stroke="rgba(243,235,211,0.15)" stroke-width="1" x1="-85" x2="85" y1="0" y2="0"></line>
+                <line stroke="rgba(243,235,211,0.15)" stroke-width="1" x1="0" x2="0" y1="-85" y2="85"></line>
+              </g>
+              <rect fill="url(#leftGradientRoster)" height="240" width="250"></rect>
+              <defs>
+                <linearGradient gradientUnits="userSpaceOnUse" id="leftGradientRoster" x1="0" x2="250" y1="0" y2="0">
+                  <stop offset="0.4" stop-color="#171822" stop-opacity="0.98"></stop>
+                  <stop offset="1" stop-color="#171822" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="toc-card-content">
+            <div class="toc-top-row">
+              <span class="toc-num" aria-hidden="true">02</span>
+              <span class="toc-badge toc-badge-crimson">COMBATANTS</span>
+            </div>
+            <div class="toc-bottom-row">
+              <div>
+                <div class="toc-kicker-row">
+                  <span class="toc-kicker toc-kicker-crimson">ROSTER</span>
+                  <span class="toc-kicker-line toc-line-crimson" aria-hidden="true"></span>
+                </div>
+                <h3 class="toc-title">로스터</h3>
+                <p class="toc-desc" id="mainRosterCountLabel">34명의 무인</p>
+              </div>
+              <span class="toc-circle-btn toc-circle-crimson" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+          <span class="toc-hover-border" aria-hidden="true"></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         (b) WORLDVIEW SECTION (#world) — Stitch 시안 그대로 이식
+         ========================================================= -->
+    <section class="section-world" id="world" aria-label="세계관">
+      <!-- 1. SECTION HEADER -->
+      <header class="world-header">
+        <div class="world-bg-word" aria-hidden="true">WORLD</div>
+        <div class="world-header-inner">
+          <h2 class="world-title">세계관</h2>
+          <div class="world-subtitle-row">
+            <div class="world-crimson-bar" aria-hidden="true"></div>
+            <p class="world-subtitle">황천과 윤회의 규칙</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- 2. ATMOSPHERIC IMAGE HERO -->
+      <div class="world-mural-zone">
+        <div class="world-mural-box">
+          <img
+            class="world-mural-img"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtUiKMEesK7iyDGUBMWIEKaPb3FpygHP75OU27y6Te_AMnfcjCO8xOAgcS8Y1qGl2XVLRhjuY_rkipOuxU9j2T_EBGSmYrQTNzK58DGOKQwPKPXk3ve3vWM4KTEmUZBrPd9yYQ8xypVJiaVg0N01bWHKAYS_zZPpmNPifBl7rUIMyuMyW_ILeHm1IPx9Q91YiiFzjc4bhHIdLLCweFpZHG6akGUvVzYyN-Cwqz1_e4"
+            alt="천상 윤회 벽화"
+            onerror="this.style.display='none'"
+          />
+          <div class="world-mural-vignette-top" aria-hidden="true"></div>
+          <div class="world-mural-vignette-bottom" aria-hidden="true"></div>
+          <div class="world-mural-slash" aria-hidden="true"></div>
+          <div class="world-slit-gold" aria-hidden="true"></div>
+          <div class="world-slit-teal" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- 3. STORY BLOCKS -->
+      <div class="world-stories">
+        <article class="world-story-card">
+          <div class="world-story-corner" aria-hidden="true"></div>
+          <div class="world-story-row">
+            <div class="world-story-idx-col">
+              <span class="world-story-idx">01</span>
+              <div class="world-story-line" aria-hidden="true"></div>
+            </div>
+            <div class="world-story-body">
+              <h3 class="world-story-title">황천</h3>
+              <p class="world-story-text">
+                잊혀진 명예로운 자들의 결투장이다. 시공간을 초월하고, 어떠한 무기도 망라하며, 실존했거나 실전 된 이야기의 주인들이 이곳으로 불려온다.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="world-story-card">
+          <div class="world-story-corner" aria-hidden="true"></div>
+          <div class="world-story-row">
+            <div class="world-story-idx-col">
+              <span class="world-story-idx">02</span>
+              <div class="world-story-line" aria-hidden="true"></div>
+            </div>
+            <div class="world-story-body">
+              <h3 class="world-story-title">일기토</h3>
+              <p class="world-story-text">
+                싸움은 언제나 한 명과 한 명이다. 결판은 사망, 항복, 행동불능 중 하나로 난다. 이기면 대기실에서 숨을 돌리고 다음 상대 앞에 선다.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="world-story-card">
+          <div class="world-story-corner" aria-hidden="true"></div>
+          <div class="world-story-row">
+            <div class="world-story-idx-col">
+              <span class="world-story-idx">03</span>
+              <div class="world-story-line" aria-hidden="true"></div>
+            </div>
+            <div class="world-story-body">
+              <h3 class="world-story-title">레테의 강</h3>
+              <p class="world-story-text">
+                쓰러진 자는 레테의 강에서 다시 눈을 뜬다. 같은 인물로 다시 도전하거나, 새 인물로 처음부터 시작할 수 있다.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="world-story-card">
+          <div class="world-story-corner" aria-hidden="true"></div>
+          <div class="world-story-row">
+            <div class="world-story-idx-col">
+              <span class="world-story-idx">04</span>
+              <div class="world-story-line" aria-hidden="true"></div>
+            </div>
+            <div class="world-story-body">
+              <h3 class="world-story-title">다섯의 격</h3>
+              <p class="world-story-text">
+                일반병부터 신화의 격까지. 당신의 과거의 기억은 봉인되고, 이름과 언어, 몸에 밴 기교만이 남는다. 실전된 이야기는 격을 통해 되찾는다.
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- 4. RANK LADDER (다섯 단계의 격) -->
+      <div class="world-rank-section">
+        <div class="world-rank-header">
+          <span class="world-rank-kicker">RANK</span>
+          <h3 class="world-rank-title">다섯 단계의 격</h3>
+          <div class="world-rank-rule" aria-hidden="true"></div>
+        </div>
+
+        <div class="world-rank-list">
+          <!-- Tier 1: 일반병 -->
+          <div class="rank-row rank-tier-1">
+            <div class="rank-plate">
+              <span class="rank-plate-text">TIER I</span>
+              <span class="rank-plate-slash" aria-hidden="true"></span>
+            </div>
+            <div class="rank-content">
+              <div class="rank-top">
+                <span class="rank-name">일반병</span>
+                <div class="rank-stars" aria-label="별 5개 중 1개">
+                  <span class="star is-filled">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+              <p class="rank-desc">정석만 아는 병사. 합이 짧고 부상이 빠르게 쌓인다.</p>
+            </div>
+          </div>
+
+          <!-- Tier 2: 숙련 -->
+          <div class="rank-row rank-tier-2">
+            <div class="rank-plate">
+              <span class="rank-plate-text">TIER II</span>
+              <span class="rank-plate-slash" aria-hidden="true"></span>
+            </div>
+            <div class="rank-content">
+              <div class="rank-top">
+                <span class="rank-name">숙련</span>
+                <div class="rank-stars" aria-label="별 5개 중 2개">
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+              <p class="rank-desc">한 유파를 익힌 자. 정석에 응용을 더한다.</p>
+            </div>
+          </div>
+
+          <!-- Tier 3: 명인 -->
+          <div class="rank-row rank-tier-3">
+            <div class="rank-plate rank-plate-3">
+              <span class="rank-plate-text rank-plate-gold">TIER III</span>
+              <span class="rank-plate-slash rank-slash-mid" aria-hidden="true"></span>
+            </div>
+            <div class="rank-content">
+              <div class="rank-top">
+                <span class="rank-name">명인</span>
+                <div class="rank-stars" aria-label="별 5개 중 3개">
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+              <p class="rank-desc">유파의 진수에 이른 자. 변칙과 허초를 쓴다.</p>
+            </div>
+          </div>
+
+          <!-- Tier 4: 전설 -->
+          <div class="rank-row rank-tier-4">
+            <div class="rank-plate rank-plate-4">
+              <span class="rank-plate-text rank-plate-gold-bright">TIER IV</span>
+              <span class="rank-plate-slash rank-slash-high" aria-hidden="true"></span>
+            </div>
+            <div class="rank-content">
+              <div class="rank-top">
+                <span class="rank-name">전설</span>
+                <div class="rank-stars" aria-label="별 5개 중 4개">
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star">★</span>
+                </div>
+              </div>
+              <p class="rank-desc">인간 한계의 극한. 한 합이 승패를 가른다.</p>
+            </div>
+          </div>
+
+          <!-- Tier 5: 신화 -->
+          <div class="rank-row rank-tier-5">
+            <div class="rank-plate rank-plate-5">
+              <span class="rank-plate-text rank-plate-gold-bright">TIER V</span>
+              <span class="rank-plate-slash rank-slash-myth" aria-hidden="true"></span>
+            </div>
+            <div class="rank-content">
+              <div class="rank-top">
+                <span class="rank-name rank-name-myth">신화</span>
+                <div class="rank-stars rank-stars-myth" aria-label="별 5개 중 5개">
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                  <span class="star is-filled">★</span>
+                </div>
+              </div>
+              <p class="rank-desc rank-desc-myth">신화 속 존재의 격. 일격이 산맥을 가른다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. CRIMSON FINALE BAND & DIAGONAL CTA -->
+      <div class="world-finale">
+        <div class="world-finale-bg" aria-hidden="true"></div>
+        <div class="world-finale-inner">
+          <h4 class="world-finale-heading">윤회의 수레를 굴릴자<br />자격을 얻으라</h4>
+          <a class="world-cta-btn" href="#roster" id="cta-roster" data-nav-target="roster">
+            <span class="world-cta-label">로스터 보기</span>
+            <span class="world-cta-arrow-wrap" aria-hidden="true">
+              <span class="world-cta-divider"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         (c) ROSTER SECTION (#roster)
+         ========================================================= -->
+    <section class="section-roster" id="roster" aria-label="생사윤회 로스터">
+      <header class="roster-header" id="rosterHeader">
+        <div class="top-bar">
+          <a href="#main" class="brand-lockup" data-nav-target="main" aria-label="메인으로 이동">
+            <span class="brand-title">生死輪迴</span>
+            <span class="brand-sub">로스터</span>
+          </a>
+          <div class="roster-total">
+            <span>무인 총원</span>
+            <span class="roster-total-num" id="totalHeroCount">34</span>
+          </div>
+        </div>
+
+        <nav class="filter-nav" aria-label="등급 필터">
+          <div class="filter-chips" id="filterChips"></div>
+        </nav>
+      </header>
+
+      <main class="roster-stage" id="characterStage">
+        <div class="samsara-ring-outer" aria-hidden="true"></div>
+        <div class="samsara-ring-inner" aria-hidden="true"></div>
+
+        <aside class="wheel-column" aria-label="무인 선택 휠">
+          <div class="wheel-control-top">
+            <button
+              type="button"
+              class="wheel-btn"
+              id="wheelUpBtn"
+              aria-label="이전 인물"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <div class="hero-wheel" id="heroWheel" role="listbox" aria-label="무인 목록"></div>
+
+          <div class="wheel-control-bottom">
+            <button
+              type="button"
+              class="wheel-btn"
+              id="wheelDownBtn"
+              aria-label="다음 인물"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <div class="wheel-counter" aria-live="polite">
+              <span class="counter-label">순번</span>
+              <div class="counter-numbers">
+                <span class="counter-current" id="currentCounter">01</span>
+                <span class="counter-total" id="filteredTotalCounter">/ 34</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <div class="hero-stage" aria-label="선택된 무인">
+          <div class="stage-backlight" aria-hidden="true"></div>
+
+          <div class="stage-portrait-wrap">
+            <div class="portrait-frame">
+              <img
+                id="stagePortraitImg"
+                class="portrait-img"
+                src=""
+                alt=""
+                width="768"
+                height="1280"
+                decoding="async"
+              />
+              <div id="stagePlaceholder" class="portrait-placeholder" aria-hidden="true">
+                <svg class="silhouette-svg" viewBox="0 0 240 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="120" cy="170" r="88" stroke="rgba(237,228,207,0.12)" stroke-width="1" />
+                  <circle cx="120" cy="170" r="64" stroke="rgba(237,228,207,0.09)" stroke-dasharray="4 6" stroke-width="1" />
+                  <path
+                    d="M120 76C136 76 148 89 148 106C148 123 136 136 120 136C104 136 92 123 92 106C92 89 104 76 120 76ZM72 184C72 158 92 146 120 146C148 146 168 158 168 184L180 282L156 286L148 364H92L84 286L60 282L72 184Z"
+                    fill="rgba(30, 31, 40, 0.72)"
+                    stroke="rgba(237, 228, 207, 0.24)"
+                    stroke-width="1.2"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="stage-scrim" aria-hidden="true"></div>
+
+          <div class="stage-info">
+            <div class="stage-meta-row">
+              <span class="grade-chip" id="heroGradeChip">명인</span>
+              <p class="weapon-culture-line" id="heroWeaponLine"></p>
+            </div>
+            <h2 class="stage-hero-name" id="heroName"></h2>
+            <button type="button" class="detail-cta" id="openDetailBtn">
+              <span>자세히</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+      </main>
+    </section>
   </div>
+
+  <!-- Hero Detail Bottom Sheet -->
+  <div class="sheet-overlay" id="sheetOverlay" hidden>
+    <div class="sheet-backdrop" id="sheetBackdrop"></div>
+
+    <section
+      class="detail-sheet"
+      id="detailSheet"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sheetHeroName"
+    >
+      <header class="sheet-topbar" id="sheetTopbar">
+        <div class="sheet-topbar-spacer" aria-hidden="true"></div>
+        <div class="sheet-drag-handle" aria-hidden="true"></div>
+        <button
+          type="button"
+          class="sheet-close-btn"
+          id="sheetCloseBtn"
+          aria-label="닫기"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+
+      <div class="sheet-image-zone" id="sheetImageZone">
+        <div class="sheet-backlight" aria-hidden="true"></div>
+
+        <div class="sheet-info-column">
+          <div class="sheet-stat-row">
+            <span class="sheet-stat-label">병기</span>
+            <span class="sheet-stat-value" id="sheetWeapon"></span>
+          </div>
+          <div class="sheet-stat-row">
+            <span class="sheet-stat-label">등급</span>
+            <span class="sheet-stat-value sheet-stat-grade" id="sheetGrade"></span>
+          </div>
+          <div class="sheet-stat-row">
+            <span class="sheet-stat-label">별칭</span>
+            <span class="sheet-stat-value sheet-stat-alias" id="sheetAlias">—</span>
+          </div>
+        </div>
+
+        <div class="sheet-portrait-wrap">
+          <div class="portrait-frame">
+            <img
+              id="sheetPortraitImg"
+              class="portrait-img"
+              src=""
+              alt=""
+              width="768"
+              height="1280"
+              decoding="async"
+            />
+            <div id="sheetPlaceholder" class="portrait-placeholder" aria-hidden="true">
+              <svg class="silhouette-svg" viewBox="0 0 240 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="120" cy="170" r="88" stroke="rgba(237,228,207,0.12)" stroke-width="1" />
+                <circle cx="120" cy="170" r="64" stroke="rgba(237,228,207,0.09)" stroke-dasharray="4 6" stroke-width="1" />
+                <path
+                  d="M120 76C136 76 148 89 148 106C148 123 136 136 120 136C104 136 92 123 92 106C92 89 104 76 120 76ZM72 184C72 158 92 146 120 146C148 146 168 158 168 184L180 282L156 286L148 364H92L84 286L60 282L72 184Z"
+                  fill="rgba(35, 30, 25, 0.78)"
+                  stroke="rgba(237, 228, 207, 0.24)"
+                  stroke-width="1.2"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="sheet-image-scrim" aria-hidden="true"></div>
+      </div>
+
+      <div class="sheet-body" id="sheetBody">
+        <div class="sheet-identity">
+          <h2 class="sheet-hero-name" id="sheetHeroName"></h2>
+          <p class="sheet-hero-culture" id="sheetHeroCulture"></p>
+        </div>
+
+        <article class="sheet-move-card" aria-label="필살기">
+          <span class="sheet-move-label">필살</span>
+          <span class="sheet-move-name" id="sheetMoveName"></span>
+        </article>
+
+        <article class="sheet-legend-block" aria-label="설화">
+          <p class="sheet-legend-text" id="sheetLegend"></p>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
