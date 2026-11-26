@@ -49,21 +49,16 @@
         </div>
       </header>
 
-      <!-- HERO (Full-bleed Crimson #D3303F, ~620px) -->
-      <div class="main-hero">
-        <div class="main-hero-bg" aria-hidden="true">
-          <div class="hero-glow"></div>
-          <div class="hero-shard hero-shard-1"></div>
-          <div class="hero-shard hero-shard-2"></div>
-          <div class="hero-shard hero-shard-3"></div>
-          <div class="hero-shard hero-shard-4"></div>
-          <svg class="hero-noise" xmlns="http://www.w3.org/2000/svg">
-            <filter id="mainNoiseFilter">
-              <feTurbulence baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" type="fractalNoise"></feTurbulence>
-            </filter>
-            <rect filter="url(#mainNoiseFilter)" width="100%" height="100%"></rect>
-          </svg>
-        </div>
+      <!-- HERO (Title Image Background + Scrim + Text) -->
+      <div class="main-hero" id="mainHero">
+        <img
+          id="mainHeroTitleImg"
+          class="main-hero-bg-img"
+          src="images/title.png"
+          alt=""
+        />
+        <div class="main-hero-scrim" aria-hidden="true"></div>
+        <div class="main-hero-tint" aria-hidden="true"></div>
 
         <div class="hero-hanja-watermark" aria-hidden="true">
           <span>生</span>
@@ -79,40 +74,6 @@
             <span class="main-hero-title-bottom">輪迴</span>
           </h1>
           <p class="main-hero-sub">INFINITE DEATH &amp; REBIRTH ARENA</p>
-        </div>
-
-        <!-- Collectible 3:5 Frame Breaking Bottom Edge -->
-        <div class="main-hero-card" aria-hidden="true">
-          <div class="main-card-crosshairs">
-            <span>+</span>
-            <span>+</span>
-          </div>
-          <div class="main-card-visual">
-            <img
-              id="mainHeroImg"
-              class="main-card-img"
-              src="images/08_musashi.webp"
-              alt=""
-              width="768"
-              height="1280"
-            />
-            <div class="main-card-silhouette" id="mainCardSilhouette">
-              <svg viewBox="0 0 240 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="120" cy="170" r="84" stroke="rgba(243,235,211,0.16)" stroke-width="1" />
-                <circle cx="120" cy="170" r="58" stroke="rgba(243,235,211,0.12)" stroke-dasharray="4 6" stroke-width="1" />
-                <path
-                  d="M120 76C136 76 148 89 148 106C148 123 136 136 120 136C104 136 92 123 92 106C92 89 104 76 120 76ZM72 184C72 158 92 146 120 146C148 146 168 158 168 184L180 282L156 286L148 364H92L84 286L60 282L72 184Z"
-                  fill="rgba(18, 19, 28, 0.78)"
-                  stroke="rgba(243, 235, 211, 0.28)"
-                  stroke-width="1.2"
-                />
-              </svg>
-            </div>
-          </div>
-          <div class="main-card-footer">
-            <span>生死輪迴</span>
-            <span>輪迴印</span>
-          </div>
         </div>
       </div>
 
@@ -502,6 +463,43 @@
       <main class="roster-stage" id="characterStage">
         <div class="samsara-ring-outer" aria-hidden="true"></div>
         <div class="samsara-ring-inner" aria-hidden="true"></div>
+        <div class="stage-backlight" aria-hidden="true"></div>
+
+        <div class="stage-portrait-wrap" id="stagePortraitWrap" aria-hidden="false">
+          <img
+            id="stagePortraitImg"
+            class="portrait-img stage-portrait-img"
+            src=""
+            alt=""
+            width="768"
+            height="1280"
+            decoding="async"
+          />
+          <img
+            id="stagePortraitImgB"
+            class="portrait-img stage-portrait-img"
+            src=""
+            alt=""
+            width="768"
+            height="1280"
+            decoding="async"
+            aria-hidden="true"
+          />
+          <div id="stagePlaceholder" class="portrait-placeholder stage-placeholder" aria-hidden="true">
+            <svg class="silhouette-svg" viewBox="0 0 240 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="120" cy="170" r="88" stroke="rgba(237,228,207,0.12)" stroke-width="1" />
+              <circle cx="120" cy="170" r="64" stroke="rgba(237,228,207,0.09)" stroke-dasharray="4 6" stroke-width="1" />
+              <path
+                d="M120 76C136 76 148 89 148 106C148 123 136 136 120 136C104 136 92 123 92 106C92 89 104 76 120 76ZM72 184C72 158 92 146 120 146C148 146 168 158 168 184L180 282L156 286L148 364H92L84 286L60 282L72 184Z"
+                fill="rgba(30, 31, 40, 0.72)"
+                stroke="rgba(237, 228, 207, 0.24)"
+                stroke-width="1.2"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="stage-left-scrim" aria-hidden="true"></div>
 
         <aside class="wheel-column" aria-label="무인 선택 휠">
           <div class="wheel-control-top">
@@ -542,34 +540,6 @@
         </aside>
 
         <div class="hero-stage" aria-label="선택된 무인">
-          <div class="stage-backlight" aria-hidden="true"></div>
-
-          <div class="stage-portrait-wrap">
-            <div class="portrait-frame">
-              <img
-                id="stagePortraitImg"
-                class="portrait-img"
-                src=""
-                alt=""
-                width="768"
-                height="1280"
-                decoding="async"
-              />
-              <div id="stagePlaceholder" class="portrait-placeholder" aria-hidden="true">
-                <svg class="silhouette-svg" viewBox="0 0 240 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="120" cy="170" r="88" stroke="rgba(237,228,207,0.12)" stroke-width="1" />
-                  <circle cx="120" cy="170" r="64" stroke="rgba(237,228,207,0.09)" stroke-dasharray="4 6" stroke-width="1" />
-                  <path
-                    d="M120 76C136 76 148 89 148 106C148 123 136 136 120 136C104 136 92 123 92 106C92 89 104 76 120 76ZM72 184C72 158 92 146 120 146C148 146 168 158 168 184L180 282L156 286L148 364H92L84 286L60 282L72 184Z"
-                    fill="rgba(30, 31, 40, 0.72)"
-                    stroke="rgba(237, 228, 207, 0.24)"
-                    stroke-width="1.2"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
           <div class="stage-scrim" aria-hidden="true"></div>
 
           <div class="stage-info">

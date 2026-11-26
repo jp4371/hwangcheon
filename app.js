@@ -45,8 +45,8 @@
   var rosterSection = document.getElementById("roster");
   var mainMenuBtn = document.getElementById("mainMenuBtn");
   var mainNavPopover = document.getElementById("mainNavPopover");
-  var mainHeroImg = document.getElementById("mainHeroImg");
-  var mainCardSilhouette = document.getElementById("mainCardSilhouette");
+  var mainHero = document.getElementById("mainHero");
+  var mainHeroTitleImg = document.getElementById("mainHeroTitleImg");
   var mainRosterCountLabel = document.getElementById("mainRosterCountLabel");
 
   // Roster Elements
@@ -60,6 +60,7 @@
   var filteredTotalCounterEl = document.getElementById("filteredTotalCounter");
 
   var stagePortraitImg = document.getElementById("stagePortraitImg");
+  var stagePortraitImgB = document.getElementById("stagePortraitImgB");
   var stagePlaceholder = document.getElementById("stagePlaceholder");
   var heroGradeChipEl = document.getElementById("heroGradeChip");
   var heroWeaponLineEl = document.getElementById("heroWeaponLine");
@@ -105,7 +106,8 @@
   var isSheetOpen = false;
   var openedSheetViaPush = false;
   var imageCache = {}; // src -> "loading" | "loaded" | "error"
-  var activeStageImageRequest = "";
+  var activeStageSlot = 0;
+  var stageLoadToken = 0;
   var activeSheetImageRequest = "";
 
   function pad2(num) {
@@ -123,15 +125,17 @@
     }
   }
 
-  // Main Hero Image fallback handling
-  if (mainHeroImg && mainCardSilhouette) {
-    mainHeroImg.addEventListener("load", function () {
-      mainCardSilhouette.classList.add("is-hidden");
+  // Main Hero Title Image fallback handling
+  if (mainHero && mainHeroTitleImg) {
+    mainHeroTitleImg.addEventListener("load", function () {
+      mainHero.classList.remove("is-img-error");
     });
-    mainHeroImg.addEventListener("error", function () {
-      mainHeroImg.style.display = "none";
-      mainCardSilhouette.classList.remove("is-hidden");
+    mainHeroTitleImg.addEventListener("error", function () {
+      mainHero.classList.add("is-img-error");
     });
+    if (mainHeroTitleImg.complete && mainHeroTitleImg.naturalWidth === 0) {
+      mainHero.classList.add("is-img-error");
+    }
   }
 
   // Main Quick Menu Popover
@@ -214,15 +218,124 @@
     if (next && next.image) preloadImage(next.image);
   }
 
-  function setPortraitImage(imgEl, placeholderEl, hero, isStage) {
+  function getHeroFocalX(hero) {
+    if (hero && typeof hero.focal_x === "number" && !isNaN(hero.focal_x)) {
+      return hero.focal_x;
+    }
+    return 62;
+  }
+
+  function applyStageFocalPosition(el, focalX) {
+    if (!el) return;
+    var scale = Math.max(focalX, 100 - focalX) / 50 + 0.02;
+    el.style.setProperty("--focal-x", String(focalX));
+    el.style.setProperty("--focal-scale", scale.toFixed(3));
+  }
+
+  function setStagePortraitCrossfade(hero) {
+    var slots = [stagePortraitImg, stagePortraitImgB];
+    var src = hero.image || "";
+    var altText = hero.name + " 인물 이미지";
+    var focalX = getHeroFocalX(hero);
+    var token = ++stageLoadToken;
+
+    applyStageFocalPosition(stagePlaceholder, focalX);
+
+    if (!src || imageCache[src] === "error") {
+      slots.forEach(function (slot) {
+        if (!slot) return;
+        slot.classList.remove("is-loaded");
+        slot.alt = altText;
+      });
+      stagePlaceholder.classList.remove("is-hidden");
+      return;
+    }
+
+    var currentImg = slots[activeStageSlot];
+    var nextSlotIdx = stagePortraitImgB ? 1 - activeStageSlot : 0;
+    var nextImg = slots[nextSlotIdx] || currentImg;
+
+    if (currentImg && currentImg.getAttribute("src") === src && imageCache[src] === "loaded") {
+      applyStageFocalPosition(currentImg, focalX);
+      currentImg.alt = altText;
+      currentImg.classList.remove("is-hidden");
+      currentImg.classList.add("is-loaded");
+      stagePlaceholder.classList.add("is-hidden");
+      return;
+    }
+
+    applyStageFocalPosition(nextImg, focalX);
+    nextImg.alt = altText;
+    nextImg.classList.remove("is-hidden");
+
+    if (imageCache[src] === "loaded") {
+      if (nextImg.getAttribute("src") !== src) {
+        nextImg.classList.remove("is-loaded");
+        nextImg.src = src;
+      }
+      if (currentImg && currentImg !== nextImg) {
+        currentImg.style.zIndex = "1";
+        currentImg.setAttribute("aria-hidden", "true");
+      }
+      nextImg.style.zIndex = "2";
+      nextImg.removeAttribute("aria-hidden");
+      stagePlaceholder.classList.add("is-hidden");
+
+      requestAnimationFrame(function () {
+        if (token !== stageLoadToken) return;
+        nextImg.classList.add("is-loaded");
+        if (currentImg && currentImg !== nextImg) {
+          currentImg.classList.remove("is-loaded");
+        }
+      });
+      activeStageSlot = nextSlotIdx;
+      return;
+    }
+
+    // Loading state: crossfade once ready without flashing placeholder over an existing portrait
+    nextImg.classList.remove("is-loaded");
+    if (!currentImg || !currentImg.classList.contains("is-loaded")) {
+      stagePlaceholder.classList.remove("is-hidden");
+    }
+
+    nextImg.onload = function () {
+      imageCache[src] = "loaded";
+      if (token !== stageLoadToken) return;
+      if (currentImg && currentImg !== nextImg) {
+        currentImg.style.zIndex = "1";
+        currentImg.setAttribute("aria-hidden", "true");
+      }
+      nextImg.style.zIndex = "2";
+      nextImg.removeAttribute("aria-hidden");
+      stagePlaceholder.classList.add("is-hidden");
+      requestAnimationFrame(function () {
+        if (token !== stageLoadToken) return;
+        nextImg.classList.add("is-loaded");
+        if (currentImg && currentImg !== nextImg) {
+          currentImg.classList.remove("is-loaded");
+        }
+      });
+      activeStageSlot = nextSlotIdx;
+    };
+
+    nextImg.onerror = function () {
+      imageCache[src] = "error";
+      if (token !== stageLoadToken) return;
+      nextImg.classList.remove("is-loaded");
+      if (currentImg && currentImg !== nextImg) {
+        currentImg.classList.remove("is-loaded");
+      }
+      stagePlaceholder.classList.remove("is-hidden");
+    };
+
+    nextImg.src = src;
+  }
+
+  function setPortraitImage(imgEl, placeholderEl, hero) {
     var src = hero.image || "";
     var altText = hero.name + " 인물 이미지";
 
-    if (isStage) {
-      activeStageImageRequest = src;
-    } else {
-      activeSheetImageRequest = src;
-    }
+    activeSheetImageRequest = src;
 
     if (!src || imageCache[src] === "error") {
       imgEl.classList.remove("is-loaded");
@@ -254,16 +367,14 @@
 
     imgEl.onload = function () {
       imageCache[src] = "loaded";
-      var latest = isStage ? activeStageImageRequest : activeSheetImageRequest;
-      if (latest !== src) return;
+      if (activeSheetImageRequest !== src) return;
       placeholderEl.classList.add("is-hidden");
       imgEl.classList.add("is-loaded");
     };
 
     imgEl.onerror = function () {
       imageCache[src] = "error";
-      var latest = isStage ? activeStageImageRequest : activeSheetImageRequest;
-      if (latest !== src) return;
+      if (activeSheetImageRequest !== src) return;
       imgEl.classList.remove("is-loaded");
       imgEl.classList.add("is-hidden");
       placeholderEl.classList.remove("is-hidden");
@@ -420,7 +531,7 @@
     filteredTotalCounterEl.textContent = "/ " + pad2(filteredHeroes.length);
 
     updateActiveTileClasses(currentIndex);
-    setPortraitImage(stagePortraitImg, stagePlaceholder, hero, true);
+    setStagePortraitCrossfade(hero);
     preloadNeighbors(currentIndex);
 
     if (opts.latch && isNewHero) {
@@ -628,7 +739,7 @@
     sheetLegendEl.textContent = hero.legend;
     sheetBody.scrollTop = 0;
 
-    setPortraitImage(sheetPortraitImg, sheetPlaceholder, hero, false);
+    setPortraitImage(sheetPortraitImg, sheetPlaceholder, hero);
   }
 
   function openDetailSheet(hero, options) {
